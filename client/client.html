@@ -44,11 +44,11 @@
 
         if (method !== 'HEAD') {
             const data = await response.json();
-            content.textContent = `Status: ${response.status} <br> ${JSON.stringify(data)}`;
+            content.innerHTML = `Success <br> ${JSON.stringify(data)}`;
         }
 
         else {
-            content.textContent = `Status: ${response.status}`;
+            content.textContent = `Success`;
         }
     });
 
