@@ -4,6 +4,11 @@ const url = require('url');
 
 const PORT = 3000;
 
+const responseJSON = (response, statusCode, object) => {
+    response.writeHead(statusCode, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(object));
+};
+
 const server = http.createServer((request, response) => {
     const parsedUrl = url.parse(request.url, true);
     const path = parsedUrl.pathname;
@@ -34,6 +39,10 @@ const server = http.createServer((request, response) => {
             response.end(data);
         });
         return;
+    }
+
+    else if (path === '/getUsers') {
+
     }
 }
 
