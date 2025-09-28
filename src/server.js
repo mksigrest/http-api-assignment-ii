@@ -24,7 +24,7 @@ const server = http.createServer((request, response) => {
         return;
     }
 
-    else if (pathName === '/getUsers' || pathName === 'notReal') {
+    else if (pathName === '/getUsers' || pathName === '/notReal') {
         getHead.ghSwitch(pathName, users, request, response);
         return;
     }
@@ -67,6 +67,8 @@ const server = http.createServer((request, response) => {
         resJSON(response, 404, { message: "The page you are looking for was not found.", id: "notFound" });
     }
 });
+
+module.exports = { resJSON };
 
 server.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}/`);
