@@ -6,8 +6,8 @@ const path = require('path');
 const client = path.join(__dirname, '..', 'client', 'client.html');
 const style = path.join(__dirname, '..', 'client', 'style.css');
 
-const clientHtml = fs.readFileSync(client);
-const styleCss = fs.readFileSync(style);
+let clientHtml = fs.readFileSync(client);
+let styleCss = fs.readFileSync(style);
 
 const PORT = 3000;
 
@@ -27,9 +27,9 @@ const resJSONHead = (response, statusCode) => {
 
 const server = http.createServer((request, response) => {
     const parsedUrl = url.parse(request.url, true);
-    const path = parsedUrl.pathname;
+    const pathName = parsedUrl.pathname;
 
-    if (path === '/' || path === '/client.html') {
+    if (pathName === '/' || pathName === '/client.html') {
         response.writeHead(200, { 'Content-Type': 'text/html' });
 
         if (request.method === 'GET') {
@@ -41,7 +41,7 @@ const server = http.createServer((request, response) => {
         }
     }
 
-    else if (path === '/style.css') {
+    else if (pathName === '/style.css') {
         response.writeHead(200, { 'Content-Type': 'text/css' });
 
         if (request.method === 'GET') {
@@ -53,7 +53,7 @@ const server = http.createServer((request, response) => {
         }
     }
 
-    else if (path === '/getUsers') {
+    else if (pathName === '/getUsers') {
         if (request.method === 'GET') {
             resJSON(response, 200, users);
         }
@@ -63,7 +63,7 @@ const server = http.createServer((request, response) => {
         }
     }
 
-    else if (path === '/notReal') {
+    else if (pathName === '/notReal') {
         if (request.method === 'GET') {
             resJSON(response, 404, users);
         }
@@ -73,7 +73,7 @@ const server = http.createServer((request, response) => {
         }
     }
 
-    else if (request.method === 'POST' && path === '/addUser') {
+    else if (request.method === 'POST' && pathName === '/addUser') {
         const { name, age } = request.body;
 
         if (!name || !age) {
