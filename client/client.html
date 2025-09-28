@@ -85,9 +85,13 @@
             content.innerHTML = '<strong>Updated (No Content)</strong>';
         }
 
-        else {
+        else if (responseUser.status === 400) {
             const error = await responseUser.json();
             content.innerHTML = `<strong>Bad Request</strong> <br><br> Message: ${data.message}`;
+        }
+
+        else {
+            content.innerHTML = `Unexpected status ${responseUser.status}`;
         }
     });
 </script>
