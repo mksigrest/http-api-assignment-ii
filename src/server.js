@@ -74,21 +74,31 @@ const server = http.createServer((request, response) => {
     }
 
     else if (request.method === 'POST' && pathName === '/addUser') {
-        const { name, age } = request.body;
+        //
+        let body = '';
+        request.on('data', (chunk) => { body += chunk; });
+        request.on('end', () => {
 
-        if (!name || !age) {
-            resJSON(response, 404, users);
-        }
+            let params = {};
+            params = JSON.parse(body);
 
-        else if (!users[name]) {
-            users[name] = { name, age };
-            resJSON(response, 201, users);
-        }
+            const { name, age } = params;
 
-        else {
-            users[name].age = age;
-            resJSONHead(response, 201);
-        }
+            if (!name || !age) {
+                resJSON(response, 400, { message: 'Name and age are required', id: 'missingParams' });
+            }
+
+            else if (!users[name]) {
+                users[name] = { name, age: Number(age) };
+                resJSON(response, 201, { message: 'User created successfully', id: 'created' });
+            }
+
+            else {
+                users[name].age = Number(age);
+                resJSONHead(response, 201);
+            }
+        });
+        return;
     }
 
     else {
