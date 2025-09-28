@@ -14,6 +14,8 @@ const PORT = 3000;
 const users = {};
 
 const resJSON = (response, statusCode, object) => {
+    console.log(object)
+
     response.writeHead(statusCode, { 'Content-Type': 'application/json' });
     response.end(JSON.stringify(object));
     return;
