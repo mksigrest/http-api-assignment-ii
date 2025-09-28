@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const url = require('url');
 
+const index = fs.readFileSync(`${__dirname}/../client/client.html`);
 const PORT = 3000;
 
 const users = {};
