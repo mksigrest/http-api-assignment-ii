@@ -19,11 +19,26 @@
           const data = await response.json();
           content.textContent = JSON.stringify(data);
       }
+
       else {
           content.textContent = `Status: ${response.status}`;
       }
 
+      //different if else if sections
 
+      if (responseUser.status === 201) {
+          const result = await response.json();
+          content.textContent = result.message;
+      }
+
+      else if (responseUser.status = 204) {
+          content.textContent = 'User updated.';
+      }
+
+      else {
+          const error = await response.json();
+          content.textContent = error.message;
+      }
   </script>
 </head>
 <body>
