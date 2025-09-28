@@ -32,24 +32,38 @@
 <script>
     const responseMethod = await fetch(url, { method: method });
     const content = document.getElementById('content');
+    const user = document.getElementById('userForm');
+    const name = document.getElementById('nameForm');
 
-    const body = JSON.stringify({ name, age });
-    const responseUser = await fetch('/addUser', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: body
+    //Get and Head handler
+    user.addEventListener('submit', async (e) => {
+        const url = document.getElementById('urlField').value;
+        const method = document.getElementById('methodSelect').value.toUpperCase();
+        const response = await fetch(url, { method });
+
+        if (method !== 'HEAD') {
+            const data = await response.json();
+            content.textContent = JSON.stringify(data);
+        }
+
+        else {
+            content.textContent = `Status: ${response.status}`;
+        }
     });
 
-    if (method !== 'HEAD') {
-        const data = await response.json();
-        content.textContent = JSON.stringify(data);
-    }
-
-    else {
-        content.textContent = `Status: ${response.status}`;
-    }
-
     //different if else if sections
+
+    //Post handler
+    name.addEventListener('submit', async (e) => {
+        const nameF = document.getElementById('nameField').value;
+        const ageF = document.getElementById('ageField').value;
+        const body = JSON.stringify({ nameF, ageF });
+        const response = await fetch('/addUser', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body
+        });
+    })
 
     if (responseUser.status === 201) {
         const result = await response.json();
