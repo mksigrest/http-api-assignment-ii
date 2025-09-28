@@ -1,13 +1,7 @@
 const http = require('http');
-const fs = require('fs');
 const url = require('url');
-const path = require('path');
 
-const client = path.join(__dirname, '..', 'client', 'client.html');
-const style = path.join(__dirname, '..', 'client', 'style.css');
-
-let clientHtml = fs.readFileSync(client);
-let styleCss = fs.readFileSync(style);
+const clientStyle = require('./clientStyle.js');
 
 const PORT = 3000;
 
@@ -23,29 +17,7 @@ const server = http.createServer((request, response) => {
     const parsedUrl = url.parse(request.url, true);
     const pathName = parsedUrl.pathname;
 
-    if (pathName === '/' || pathName === '/client.html') {
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-
-        if (request.method === 'GET') {
-            response.end(clientHtml);
-        }
-
-        else {
-            response.end()
-        }
-    }
-
-    else if (pathName === '/style.css') {
-        response.writeHead(200, { 'Content-Type': 'text/css' });
-
-        if (request.method === 'GET') {
-            response.end(styleCss);
-        }
-
-        else {
-            response.end();
-        }
-    }
+    clientStyle.baseSwitch(pathName, request, response);
 
     else if (pathName === '/getUsers') {
         if (request.method === 'GET') {
