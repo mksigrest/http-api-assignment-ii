@@ -61,6 +61,24 @@ const server = http.createServer((request, response) => {
         }
     }
 
+    else if (request.method === 'POST' && path === '/addUser') {
+        let name;
+        let age;
+
+        if (!name || !age) {
+            responseJSON(response, 404, { message: "no name or age read" });
+        }
+
+        else if (!users[name]) {
+            users[name] = { name, age };
+            responseJSON(response, 201, { message: "created new user" });
+        }
+
+        else {
+            users[name].age = age;
+            responseJSON(response, 201, { message: "updated age" });
+        }
+
     else {
         responseJSON(response, 404, { message: "error 404: page not found" });
     }
