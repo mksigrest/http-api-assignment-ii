@@ -1,9 +1,14 @@
 const http = require('http');
 const fs = require('fs');
 const url = require('url');
+const path = require('path');
 
-const client = fs.readFileSync(`${__dirname}/../client/client.html`);
-const style = fs.readFileSync(`${__dirname}/../client/style.css`);
+const client = path.join(__dirname, '..', 'client', 'client.html');
+const style = path.join(__dirname, '..', 'client', 'style.css');
+
+const clientHtml = fs.readFileSync(client);
+const styleCss = fs.readFileSync(style);
+
 const PORT = 3000;
 
 const users = {};
@@ -25,31 +30,27 @@ const server = http.createServer((request, response) => {
     const path = parsedUrl.pathname;
 
     if (path === '/' || path === '/client.html') {
-        fs.readFile(client, (error, data) => {
-            if (error) {
-                response.writeHead(500, { 'Content-Type': 'text/plain' });
-                response.end('Server error');
-                return;
-            }
+        response.writeHead(200, { 'Content-Type': 'text/html' });
 
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end(data);
-        });
-        return;
+        if (request.method === 'GET') {
+            response.end(clientHtml);
+        }
+
+        else {
+            response.end()
+        }
     }
 
     else if (path === '/style.css') {
-        fs.readFile(style, (error, data) => {
-            if (error) {
-                response.writeHead(404, { 'Content-Type': 'text/plain' });
-                response.end('Not found');
-                return;
-            }
+        response.writeHead(200, { 'Content-Type': 'text/css' });
 
-            response.writeHead(200, { 'Content-Type': 'text/css' });
-            response.end(data);
-        });
-        return;
+        if (request.method === 'GET') {
+            response.end(styleCss);
+        }
+
+        else {
+            response.end();
+        }
     }
 
     else if (path === '/getUsers') {
