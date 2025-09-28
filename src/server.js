@@ -18,13 +18,7 @@ const resJSON = (response, statusCode, object) => {
     response.end(JSON.stringify(object));
     return;
 };
-/*
-const resJSONHead = (response, statusCode) => {
-    response.writeHead(statusCode, { 'Content-Type': 'application/json' });
-    response.end();
-    return;
-}
-*/
+
 const server = http.createServer((request, response) => {
     const parsedUrl = url.parse(request.url, true);
     const pathName = parsedUrl.pathname;
@@ -74,7 +68,7 @@ const server = http.createServer((request, response) => {
     }
 
     else if (request.method === 'POST' && pathName === '/addUser') {
-        //
+        
         let body = '';
         request.on('data', (chunk) => { body += chunk; });
         request.on('end', () => {
@@ -89,12 +83,12 @@ const server = http.createServer((request, response) => {
             }
 
             else if (!users[name]) {
-                users[name] = { name, age: Number(age) };
+                users[name] = { name, age: age };
                 resJSON(response, 201, { message: 'User created successfully', id: 'created' });
             }
 
             else {
-                users[name].age = Number(age);
+                users[name].age = age;
                 resJSON(response, 204);
             }
         });

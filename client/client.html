@@ -32,7 +32,6 @@
 <script>
     const content = document.getElementById('content');
 
-    //Get and Head handler
     document.getElementById('userForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -50,13 +49,13 @@
             else {
                 const error = await response.json();
                 content.innerHTML = `<strong>Not Found</strong> <br> <br> Message: The page you were looking for was not found.`;
+                console.error()
             }
         }
 
         else {
             if (response.ok) {
                 content.innerHTML = `<strong>Success</strong>`;
-                console.log(data);
             }
 
             else {
@@ -65,9 +64,6 @@
         }
     });
 
-    //different if else if sections
-
-    //Post handler
     document.getElementById('nameForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
