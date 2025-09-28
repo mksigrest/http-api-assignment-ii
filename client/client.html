@@ -44,7 +44,7 @@
 
         if (method !== 'HEAD') {
             const data = await response.json();
-            content.textContent = JSON.stringify(data);
+            content.textContent = `Status: ${response.status} <br> ${JSON.stringify(data)}`;
         }
 
         else {
