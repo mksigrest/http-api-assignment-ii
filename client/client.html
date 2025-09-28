@@ -3,43 +3,6 @@
 <head>
   <title>Our simple HTTP server</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  
-  <script>
-      const responseMethod = await fetch(url, { method: method });
-      const content = document.getElementById('content');
-
-      const body = JSON.stringify({ name, age });
-      const responseUser = await fetch('/addUser', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: body
-      });
-
-      if (method !== 'HEAD') {
-          const data = await response.json();
-          content.textContent = JSON.stringify(data);
-      }
-
-      else {
-          content.textContent = `Status: ${response.status}`;
-      }
-
-      //different if else if sections
-
-      if (responseUser.status === 201) {
-          const result = await response.json();
-          content.textContent = result.message;
-      }
-
-      else if (responseUser.status = 204) {
-          content.textContent = 'User updated.';
-      }
-
-      else {
-          const error = await response.json();
-          content.textContent = error.message;
-      }
-  </script>
 </head>
 <body>
   <section id="top">
@@ -66,4 +29,40 @@
   <section id="content">
   </section>
 </body>
+<script>
+    const responseMethod = await fetch(url, { method: method });
+    const content = document.getElementById('content');
+
+    const body = JSON.stringify({ name, age });
+    const responseUser = await fetch('/addUser', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: body
+    });
+
+    if (method !== 'HEAD') {
+        const data = await response.json();
+        content.textContent = JSON.stringify(data);
+    }
+
+    else {
+        content.textContent = `Status: ${response.status}`;
+    }
+
+    //different if else if sections
+
+    if (responseUser.status === 201) {
+        const result = await response.json();
+        content.textContent = result.message;
+    }
+
+    else if (responseUser.status = 204) {
+        content.textContent = 'User updated.';
+    }
+
+    else {
+        const error = await response.json();
+        content.textContent = error.message;
+    }
+</script>
 </html>
