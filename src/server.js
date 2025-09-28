@@ -95,7 +95,7 @@ const server = http.createServer((request, response) => {
 
             else {
                 users[name].age = Number(age);
-                resJSONHead(response, 201);
+                resJSONHead(response, 204);
             }
         });
         return;
