@@ -8,11 +8,11 @@ const users = {};
 
 const resJSON = (response, statusCode, object) => {
     response.writeHead(statusCode, { 'Content-Type': 'application/json' });
-    response.end(JSON.stringify(users));
+    response.end(JSON.stringify(object));
     return;
 };
 
-const resJSONHead = (response, statusCode, object) => {
+const resJSONHead = (response, statusCode) => {
     response.writeHead(statusCode, { 'Content-Type': 'application/json' });
     response.end();
     return;
@@ -52,21 +52,21 @@ const server = http.createServer((request, response) => {
 
     else if (path === '/getUsers') {
         if (request.method === 'GET') {
-            resJSON(response, 200, { message: "response success!" });
+            resJSON(response, 200, users);
         }
 
         else if (request.method === 'HEAD') {
-            resJSONHead(response, 200, { message: "response success!" });
+            resJSONHead(response, 200);
         }
     }
 
     else if (path === '/notReal') {
         if (request.method === 'GET') {
-            resJSON(response, 404, { message: "response success!" });
+            resJSON(response, 404, users);
         }
 
         else if (request.method === 'HEAD') {
-            resJSONHead(response, 404, { message: "response success!" });
+            resJSONHead(response, 404);
         }
     }
 
@@ -74,22 +74,22 @@ const server = http.createServer((request, response) => {
         const { name, age } = request.body;
 
         if (!name || !age) {
-            resJSON(response, 404, { message: "no name or age read" });
+            resJSON(response, 404, users);
         }
 
         else if (!users[name]) {
             users[name] = { name, age };
-            resJSON(response, 201, { message: "created new user" });
+            resJSON(response, 201, users);
         }
 
         else {
             users[name].age = age;
-            resJSONHead(response, 201, { message: "updated age" });
+            resJSONHead(response, 201);
         }
     }
 
     else {
-        resJSONHead(response, 404, { message: "error 404: page not found" });
+        resJSONHead(response, 404);
     }
 });
 
