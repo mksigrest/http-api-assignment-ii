@@ -84,7 +84,7 @@ const server = http.createServer((request, response) => {
     }
 
     else {
-        responseJSON(response, 404, { message: "error 404: page not found" });
+        responseJSONHead(response, 404, { message: "error 404: page not found" });
     }
 });
 
