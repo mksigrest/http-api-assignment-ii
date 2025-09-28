@@ -31,11 +31,9 @@
 </body>
 <script>
     const content = document.getElementById('content');
-    const user = document.getElementById('userForm');
-    const name = document.getElementById('nameForm');
 
     //Get and Head handler
-    user.addEventListener('submit', async (e) => {
+    document.getElementById('userForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const url = document.getElementById('urlField').value;
@@ -68,12 +66,12 @@
     //different if else if sections
 
     //Post handler
-    name.addEventListener('submit', async (e) => {
+    document.getElementById('nameForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const nameF = document.getElementById('nameField').value;
-        const ageF = document.getElementById('ageField').value;
-        const body = JSON.stringify({ nameF, ageF });
+        const name = document.getElementById('nameField').value;
+        const age = document.getElementById('ageField').value;
+        const body = JSON.stringify({ name, age });
         const responseUser = await fetch('/addUser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
