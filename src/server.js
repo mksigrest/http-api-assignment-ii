@@ -2,7 +2,8 @@ const http = require('http');
 const fs = require('fs');
 const url = require('url');
 
-const index = fs.readFileSync(`${__dirname}/../client/client.html`);
+const client = fs.readFileSync(`${__dirname}/../client/client.html`);
+const style = fs.readFileSync(`${__dirname}/../client/style.css`);
 const PORT = 3000;
 
 const users = {};
@@ -24,7 +25,7 @@ const server = http.createServer((request, response) => {
     const path = parsedUrl.pathname;
 
     if (path === '/' || path === '/client.html') {
-        fs.readFile('client.html', (error, data) => {
+        fs.readFile(client, (error, data) => {
             if (error) {
                 response.writeHead(500, { 'Content-Type': 'text/plain' });
                 response.end('Server error');
@@ -38,7 +39,7 @@ const server = http.createServer((request, response) => {
     }
 
     else if (path === '/style.css') {
-        fs.readFile('style.css', (error, data) => {
+        fs.readFile(style, (error, data) => {
             if (error) {
                 response.writeHead(404, { 'Content-Type': 'text/plain' });
                 response.end('Not found');
