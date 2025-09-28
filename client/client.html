@@ -43,12 +43,25 @@
         const response = await fetch(url, { method });
 
         if (method !== 'HEAD') {
-            const data = await response.json();
-            content.innerHTML = `Success <br> ${JSON.stringify(data)}`;
+            if (response.ok) {
+                const data = await response.json();
+                content.innerHTML = `<strong>Success</strong> <br> <br> ${JSON.stringify(data)}`;
+            }
+
+            else {
+                const error = await response.json();
+                content.innerHTML = `<strong>Not Found</strong> <br> <br> Message: The page you were looking for was not found.`;
+            }
         }
 
         else {
-            content.textContent = `Success`;
+            if (response.ok) {
+                content.innerHTML = `<strong>Success</strong>`;
+            }
+
+            else {
+                content.innerHTML = `<strong>Not Found</strong>`
+            }
         }
     });
 
