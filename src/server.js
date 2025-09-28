@@ -81,11 +81,12 @@ const server = http.createServer((request, response) => {
             users[name].age = age;
             responseJSONHead(response, 201, { message: "updated age" });
         }
+    }
 
     else {
         responseJSON(response, 404, { message: "error 404: page not found" });
     }
-}
+});
 
 server.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}/`);
