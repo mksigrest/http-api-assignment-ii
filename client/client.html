@@ -30,13 +30,14 @@
   </section>
 </body>
 <script>
-    const responseMethod = await fetch(url, { method: method });
     const content = document.getElementById('content');
     const user = document.getElementById('userForm');
     const name = document.getElementById('nameForm');
 
     //Get and Head handler
     user.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
         const url = document.getElementById('urlField').value;
         const method = document.getElementById('methodSelect').value.toUpperCase();
         const response = await fetch(url, { method });
@@ -55,6 +56,8 @@
 
     //Post handler
     name.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
         const nameF = document.getElementById('nameField').value;
         const ageF = document.getElementById('ageField').value;
         const body = JSON.stringify({ nameF, ageF });
@@ -63,20 +66,20 @@
             headers: { 'Content-Type': 'application/json' },
             body
         });
-    })
 
-    if (responseUser.status === 201) {
-        const result = await response.json();
-        content.textContent = result.message;
-    }
+        if (responseUser.status === 201) {
+            const result = await response.json();
+            content.textContent = result.message;
+        }
 
-    else if (responseUser.status = 204) {
-        content.textContent = 'User updated.';
-    }
+        else if (responseUser.status = 204) {
+            content.textContent = 'User updated.';
+        }
 
-    else {
-        const error = await response.json();
-        content.textContent = error.message;
-    }
+        else {
+            const error = await response.json();
+            content.textContent = error.message;
+        }
+    });
 </script>
 </html>
