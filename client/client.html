@@ -5,7 +5,16 @@
   <link rel="stylesheet" type="text/css" href="/style.css">
   
   <script>
+      const response = await fetch(url, { method: method });
+      const content = document.getElementById('content');
 
+      if (method !== 'HEAD') {
+          const data = await response.json();
+          content.textContent = JSON.stringify(data);
+      }
+      else {
+          content.textContent = `Status: ${response.status}`;
+      }
   </script>
 </head>
 <body>
