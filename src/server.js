@@ -1,24 +1,27 @@
 const http = require('http');
 const fs = require('fs');
-const path = require('path');
+const url = require('url');
 
 const PORT = 3000;
 
 const users = {};
 
-const responseJSONGet = (response, statusCode, object) => {
+const resJSON = (response, statusCode, object) => {
     response.writeHead(statusCode, { 'Content-Type': 'application/json' });
     response.end(JSON.stringify(users));
     return;
 };
 
-const responseJSONHead = (response, statusCode, object) => {
+const resJSONHead = (response, statusCode, object) => {
     response.writeHead(statusCode, { 'Content-Type': 'application/json' });
     response.end();
     return;
 }
 
 const server = http.createServer((request, response) => {
+    const parsedUrl = url.parse(request.url, true);
+    const path = parsedUrl.pathname;
+
     if (path === '/' || path === '/client.html') {
         fs.readFile('client.html', (error, data) => {
             if (error) {
@@ -49,21 +52,21 @@ const server = http.createServer((request, response) => {
 
     else if (path === '/getUsers') {
         if (request.method === 'GET') {
-            responseJSONGet(response, 200, { message: "response success!" });
+            resJSON(response, 200, { message: "response success!" });
         }
 
         else if (request.method === 'HEAD') {
-            responseJSONHead(response, 200, { message: "response success!" });
+            resJSONHead(response, 200, { message: "response success!" });
         }
     }
 
     else if (path === '/notReal') {
         if (request.method === 'GET') {
-            responseJSONGet(response, 404, { message: "response success!" });
+            resJSON(response, 404, { message: "response success!" });
         }
 
         else if (request.method === 'HEAD') {
-            responseJSONHead(response, 404, { message: "response success!" });
+            resJSONHead(response, 404, { message: "response success!" });
         }
     }
 
@@ -71,22 +74,22 @@ const server = http.createServer((request, response) => {
         const { name, age } = request.body;
 
         if (!name || !age) {
-            responseJSONGet(response, 404, { message: "no name or age read" });
+            resJSON(response, 404, { message: "no name or age read" });
         }
 
         else if (!users[name]) {
             users[name] = { name, age };
-            responseJSONGet(response, 201, { message: "created new user" });
+            resJSON(response, 201, { message: "created new user" });
         }
 
         else {
             users[name].age = age;
-            responseJSONHead(response, 201, { message: "updated age" });
+            resJSONHead(response, 201, { message: "updated age" });
         }
     }
 
     else {
-        responseJSONHead(response, 404, { message: "error 404: page not found" });
+        resJSONHead(response, 404, { message: "error 404: page not found" });
     }
 });
 
