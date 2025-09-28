@@ -46,10 +46,11 @@
                 console.log(data);
             }
 
+            //JSON error
             else {
                 const error = await response.json();
-                content.innerHTML = `<strong>Not Found</strong> <br> <br> Message: ${data.message}`;
-                console.error()
+                content.innerHTML = `<strong>Not Found</strong> <br> <br> Message: ${error.message}`;
+                console.error(error);
             }
         }
 
@@ -58,6 +59,7 @@
                 content.innerHTML = `<strong>Success</strong>`;
             }
 
+            //JSON error
             else {
                 content.innerHTML = `<strong>Not Found</strong>`
             }
@@ -78,6 +80,7 @@
 
         if (responseUser.status === 201) {
             const result = await responseUser.json();
+            console.log(result);
             content.innerHTML = `<strong>Created</strong> <br><br> Message: Created Successfully`;
         }
 
@@ -85,12 +88,15 @@
             content.innerHTML = '<strong>Updated (No Content)</strong>';
         }
 
+        //JSON error
         else if (responseUser.status === 400) {
             const error = await responseUser.json();
+            console.log(error);
             content.innerHTML = `<strong>Bad Request</strong> <br><br> Message: ${data.message}`;
         }
 
         else {
+            console.log(responseUser.status);
             content.innerHTML = `Unexpected status ${responseUser.status}`;
         }
     });

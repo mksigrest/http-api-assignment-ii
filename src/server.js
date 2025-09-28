@@ -58,10 +58,12 @@ const server = http.createServer((request, response) => {
     }
 
     else if (pathName === '/notReal') {
+        //JSON error
         if (request.method === 'GET') {
             resJSON(response, 404, {message: "The page you are looking for was not found.", id: "notFound" });
         }
 
+        //JSON error
         else if (request.method === 'HEAD') {
             resJSON(response, 404);
         }
@@ -78,13 +80,14 @@ const server = http.createServer((request, response) => {
 
             const { name, age } = params;
 
+            //JSON error
             if (!name || !age) {
                 resJSON(response, 400, { message: 'Name and age are required' });
             }
 
             else if (!users[name]) {
                 users[name] = { name, age: age };
-                resJSON(response, 201, { message: 'Created Successfully', id: 'created' });
+                resJSON(response, 201, { message: 'Created Successfully', });
             }
 
             else {
@@ -96,7 +99,7 @@ const server = http.createServer((request, response) => {
     }
 
     else {
-        resJSON(response, 404);
+        resJSON(response, 404, { message: "The page you are looking for was not found.", id: "notFound" });
     }
 });
 
