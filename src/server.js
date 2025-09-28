@@ -18,13 +18,13 @@ const resJSON = (response, statusCode, object) => {
     response.end(JSON.stringify(object));
     return;
 };
-
+/*
 const resJSONHead = (response, statusCode) => {
     response.writeHead(statusCode, { 'Content-Type': 'application/json' });
     response.end();
     return;
 }
-
+*/
 const server = http.createServer((request, response) => {
     const parsedUrl = url.parse(request.url, true);
     const pathName = parsedUrl.pathname;
@@ -59,7 +59,7 @@ const server = http.createServer((request, response) => {
         }
 
         else if (request.method === 'HEAD') {
-            resJSONHead(response, 200);
+            resJSON(response, 200);
         }
     }
 
@@ -69,7 +69,7 @@ const server = http.createServer((request, response) => {
         }
 
         else if (request.method === 'HEAD') {
-            resJSONHead(response, 404);
+            resJSON(response, 404);
         }
     }
 
@@ -95,14 +95,14 @@ const server = http.createServer((request, response) => {
 
             else {
                 users[name].age = Number(age);
-                resJSONHead(response, 204);
+                resJSON(response, 204);
             }
         });
         return;
     }
 
     else {
-        resJSONHead(response, 404);
+        resJSON(response, 404);
     }
 });
 
