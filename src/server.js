@@ -59,7 +59,7 @@ const server = http.createServer((request, response) => {
 
     else if (pathName === '/notReal') {
         if (request.method === 'GET') {
-            resJSON(response, 404, users);
+            resJSON(response, 404, {message: "The page you are looking for was not found.", id: "notFound" });
         }
 
         else if (request.method === 'HEAD') {
@@ -79,12 +79,12 @@ const server = http.createServer((request, response) => {
             const { name, age } = params;
 
             if (!name || !age) {
-                resJSON(response, 400, { message: 'Name and age are required', id: 'missingParams' });
+                resJSON(response, 400, { message: 'Name and age are required' });
             }
 
             else if (!users[name]) {
                 users[name] = { name, age: age };
-                resJSON(response, 201, { message: 'User created successfully', id: 'created' });
+                resJSON(response, 201, { message: 'Created Successfully', id: 'created' });
             }
 
             else {

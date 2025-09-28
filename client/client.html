@@ -48,7 +48,7 @@
 
             else {
                 const error = await response.json();
-                content.innerHTML = `<strong>Not Found</strong> <br> <br> Message: The page you were looking for was not found.`;
+                content.innerHTML = `<strong>Not Found</strong> <br> <br> Message: ${data.message}`;
                 console.error()
             }
         }
@@ -87,7 +87,7 @@
 
         else {
             const error = await responseUser.json();
-            content.innerHTML = `<strong>Bad Request</strong> <br><br> Message: Name and age are both required.`;
+            content.innerHTML = `<strong>Bad Request</strong> <br><br> Message: ${data.message}`;
         }
     });
 </script>
