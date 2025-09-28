@@ -42,7 +42,11 @@ const server = http.createServer((request, response) => {
     }
 
     else if (path === '/getUsers') {
+        responseJSON(response, 200, { message: "response success!" });
+    }
 
+    else if (path === '/notReal') {
+        responseJSON(response, 404, { message: "response success!" });
     }
 }
 
