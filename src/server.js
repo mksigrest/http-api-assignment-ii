@@ -60,6 +60,10 @@ const server = http.createServer((request, response) => {
             responseJSON(response, 404, { message: "response success!" });
         }
     }
+
+    else {
+        responseJSON(response, 404, { message: "error 404: page not found" });
+    }
 }
 
 server.listen(PORT, () => {
