@@ -1,4 +1,4 @@
-const ghSwitch = (pathName, request, response) => {
+const ghSwitch = (pathName, users, request, response) => {
     if (pathName === '/getUsers') {
         if (request.method === 'GET') {
             resJSON(response, 200, users);

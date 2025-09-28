@@ -2,8 +2,8 @@ const http = require('http');
 const url = require('url');
 
 const clientStyle = require('./clientStyle.js');
-const getHead = require('.getHead.js');
-const post = require('post.js');
+const getHead = require('./getHead.js');
+const post = require('./post.js');
 
 const PORT = 3000;
 
@@ -25,14 +25,15 @@ const server = http.createServer((request, response) => {
     }
 
     else if (pathName === '/getUsers' || pathName === 'notReal') {
-        getHead.ghSwitch(pathName, request, response);
+        getHead.ghSwitch(pathName, users, request, response);
         return;
     }
-
+    /*
     else if (request.method === 'POST' && pathName === '/addUser') {
         post.postSwitch(pathName, request, response);
     }
-
+    */
+    
     else if (request.method === 'POST' && pathName === '/addUser') {
         
         let body = '';
