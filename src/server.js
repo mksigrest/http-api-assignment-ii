@@ -2,6 +2,8 @@ const http = require('http');
 const url = require('url');
 
 const clientStyle = require('./clientStyle.js');
+const getHead = require('.getHead.js');
+const post = require('post.js');
 
 const PORT = 3000;
 
@@ -17,28 +19,18 @@ const server = http.createServer((request, response) => {
     const parsedUrl = url.parse(request.url, true);
     const pathName = parsedUrl.pathname;
 
-    clientStyle.baseSwitch(pathName, request, response);
-
-    else if (pathName === '/getUsers') {
-        if (request.method === 'GET') {
-            resJSON(response, 200, users);
-        }
-
-        else if (request.method === 'HEAD') {
-            resJSON(response, 200);
-        }
+    if (pathName === '/' || pathName === '/client.html' || pathName === '/style.css') {
+        clientStyle.baseSwitch(pathName, request, response);
+        return;
     }
 
-    else if (pathName === '/notReal') {
-        //JSON error
-        if (request.method === 'GET') {
-            resJSON(response, 404, {message: "The page you are looking for was not found.", id: "notFound" });
-        }
+    else if (pathName === '/getUsers' || pathName === 'notReal') {
+        getHead.ghSwitch(pathName, request, response);
+        return;
+    }
 
-        //JSON error
-        else if (request.method === 'HEAD') {
-            resJSON(response, 404);
-        }
+    else if (request.method === 'POST' && pathName === '/addUser') {
+        post.postSwitch(pathName, request, response);
     }
 
     else if (request.method === 'POST' && pathName === '/addUser') {
