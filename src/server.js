@@ -82,12 +82,12 @@ const server = http.createServer((request, response) => {
 
             //JSON error
             if (!name || !age) {
-                resJSON(response, 400, { message: 'Name and age are required' });
+                resJSON(response, 400, { message: 'Name and age are required', id: 'addUserMissingParams' });
             }
 
             else if (!users[name]) {
                 users[name] = { name, age: age };
-                resJSON(response, 201, { message: 'Created Successfully', });
+                resJSON(response, 201, { message: 'Created Successfully' });
             }
 
             else {

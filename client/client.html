@@ -92,7 +92,7 @@
         else if (responseUser.status === 400) {
             const error = await responseUser.json();
             console.log(error);
-            content.innerHTML = `<strong>Bad Request</strong> <br><br> Message: ${data.message}`;
+            content.innerHTML = `<strong>Bad Request</strong> <br><br> Message: ${error.message}`;
         }
 
         else {
