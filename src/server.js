@@ -4,6 +4,8 @@ const path = require('path');
 
 const PORT = 3000;
 
+const users = {};
+
 const responseJSONGet = (response, statusCode, object) => {
     response.writeHead(statusCode, { 'Content-Type': 'application/json' });
     response.end(JSON.stringify(users));
@@ -24,6 +26,7 @@ const server = http.createServer((request, response) => {
                 response.end('Server error');
                 return;
             }
+
             response.writeHead(200, { 'Content-Type': 'text/html' });
             response.end(data);
         });
@@ -65,8 +68,7 @@ const server = http.createServer((request, response) => {
     }
 
     else if (request.method === 'POST' && path === '/addUser') {
-        let name;
-        let age;
+        const { name, age } = request.body;
 
         if (!name || !age) {
             responseJSONGet(response, 404, { message: "no name or age read" });
