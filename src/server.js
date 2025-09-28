@@ -1,19 +1,22 @@
 const http = require('http');
 const fs = require('fs');
-const url = require('url');
+const path = require('path');
 
 const PORT = 3000;
 
-const responseJSON = (response, statusCode, object) => {
+const responseJSONGet = (response, statusCode, object) => {
     response.writeHead(statusCode, { 'Content-Type': 'application/json' });
-    response.end(JSON.stringify(object));
+    response.end(JSON.stringify(users));
+    return;
 };
 
-const server = http.createServer((request, response) => {
-    const parsedUrl = url.parse(request.url, true);
-    const path = parsedUrl.pathname;
-    const query = parsedUrl.query;
+const responseJSONHead = (response, statusCode, object) => {
+    response.writeHead(statusCode, { 'Content-Type': 'application/json' });
+    response.end();
+    return;
+}
 
+const server = http.createServer((request, response) => {
     if (path === '/' || path === '/client.html') {
         fs.readFile('client.html', (error, data) => {
             if (error) {
@@ -43,21 +46,21 @@ const server = http.createServer((request, response) => {
 
     else if (path === '/getUsers') {
         if (request.method === 'GET') {
-            responseJSON(response, 200, { message: "response success!" });
+            responseJSONGet(response, 200, { message: "response success!" });
         }
 
         else if (request.method === 'HEAD') {
-            responseJSON(response, 200, { message: "response success!" });
+            responseJSONHead(response, 200, { message: "response success!" });
         }
     }
 
     else if (path === '/notReal') {
         if (request.method === 'GET') {
-            responseJSON(response, 404, { message: "response success!" });
+            responseJSONGet(response, 404, { message: "response success!" });
         }
 
         else if (request.method === 'HEAD') {
-            responseJSON(response, 404, { message: "response success!" });
+            responseJSONHead(response, 404, { message: "response success!" });
         }
     }
 
@@ -66,17 +69,17 @@ const server = http.createServer((request, response) => {
         let age;
 
         if (!name || !age) {
-            responseJSON(response, 404, { message: "no name or age read" });
+            responseJSONGet(response, 404, { message: "no name or age read" });
         }
 
         else if (!users[name]) {
             users[name] = { name, age };
-            responseJSON(response, 201, { message: "created new user" });
+            responseJSONGet(response, 201, { message: "created new user" });
         }
 
         else {
             users[name].age = age;
-            responseJSON(response, 201, { message: "updated age" });
+            responseJSONHead(response, 201, { message: "updated age" });
         }
 
     else {
