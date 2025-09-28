@@ -79,17 +79,17 @@
         });
 
         if (responseUser.status === 201) {
-            const result = await response.json();
-            content.textContent = result.message;
+            const result = await responseUser.json();
+            content.innerHTML = `<strong>Created</strong> <br><br> Message: Created Successfully`;
         }
 
         else if (responseUser.status = 204) {
-            content.textContent = 'User updated.';
+            content.innerHTML = '<strong>Updated (No Content)</strong>';
         }
 
         else {
-            const error = await response.json();
-            content.textContent = error.message;
+            const error = await responseUser.json();
+            content.innerHTML = `<strong>Bad Request</strong> <br><br> Message: Name and age are both required.`;
         }
     });
 </script>
