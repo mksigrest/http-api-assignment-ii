@@ -5,8 +5,15 @@
   <link rel="stylesheet" type="text/css" href="/style.css">
   
   <script>
-      const response = await fetch(url, { method: method });
+      const responseMethod = await fetch(url, { method: method });
       const content = document.getElementById('content');
+
+      const body = JSON.stringify({ name, age });
+      const responseUser = await fetch('/addUser', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: body
+      });
 
       if (method !== 'HEAD') {
           const data = await response.json();
@@ -15,6 +22,8 @@
       else {
           content.textContent = `Status: ${response.status}`;
       }
+
+
   </script>
 </head>
 <body>
