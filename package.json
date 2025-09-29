@@ -4,6 +4,7 @@
   "description": "npm for my project",
   "main": "index.js",
   "scripts": {
+    "start": "node src/server.js",
     "pretest": "eslint src/server.js",
     "test": "echo \"Tests complete\""
   },
