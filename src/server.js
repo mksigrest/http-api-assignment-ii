@@ -4,7 +4,7 @@ const url = require('url');
 const clientStyle = require('./clientStyle.js');
 const getHead = require('./getHead.js');
 
-const port = process.env.PORT || process.env.NODE_PORT || 3000;
+const PORT = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const users = {};
 
