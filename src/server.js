@@ -3,7 +3,6 @@ const url = require('url');
 
 const clientStyle = require('./clientStyle.js');
 const getHead = require('./getHead.js');
-const post = require('./post.js');
 
 const PORT = 3000;
 
@@ -30,7 +29,30 @@ const server = http.createServer((request, response) => {
     }
     
     else if (request.method === 'POST' && pathName === '/addUser') {
-        post.postSwitch(request, response);
+        let body = '';
+        request.on('data', (chunk) => { body += chunk; });
+        request.on('end', () => {
+
+            let params = {};
+            params = JSON.parse(body);
+
+            const { name, age } = params;
+
+            //JSON error
+            if (!name || !age) {
+                resJSON(response, 400, { message: 'Name and age are required', id: 'addUserMissingParams' });
+            }
+
+            else if (!users[name]) {
+                users[name] = { name, age: age };
+                resJSON(response, 201, { message: 'Created Successfully' });
+            }
+
+            else {
+                users[name].age = age;
+                resJSON(response, 204);
+            }
+        });
         return;
     }
 
