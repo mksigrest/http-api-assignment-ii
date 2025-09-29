@@ -30,7 +30,7 @@ const server = http.createServer((request, response) => {
     }
     
     else if (request.method === 'POST' && pathName === '/addUser') {
-        post.postSwitch(pathName, request, response);
+        post.postSwitch(request, response);
         return;
     }
 

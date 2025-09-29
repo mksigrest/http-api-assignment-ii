@@ -4,7 +4,7 @@ const resJSON = (response, statusCode, object) => {
     return;
 };
 
-const postSwitch = (request, response) => {
+const postSwitch = (users, request, response) => {
     let body = '';
     request.on('data', (chunk) => { body += chunk; });
     request.on('end', () => {
