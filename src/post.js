@@ -26,7 +26,8 @@ const postSwitch = (users, request, response) => {
 
         else {
             users[name].age = age;
-            resJSON(response, 204);
+            response.writeHead(204);
+            response.end();
         }
     });
 }
